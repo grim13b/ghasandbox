@@ -1,0 +1,25 @@
+name: variable location
+
+on:
+    push
+
+jobs:
+    variable-location:
+        name: variable location
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+
+        steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+        - name: Set Location
+          run: |
+            echo "::set-env name=LOCATION::GHSECRET"
+        - name: Set Environment
+          run: |
+            echo "::set-env name=HOGE::${{ env.LOCATION }}_HOGE"
+            echo "::set-env name=HANI::${{ env.LOCATION }}_HANI"
+        - name: Result
+          run: |
+            echo ${{ env.HOGE }}
+            echo ${{ env.HANI }}
